@@ -1,7 +1,7 @@
 /**
  * Plain-DOM UI: top bar, unit cards, event feed, deployment panel, result screen.
  */
-import { PLAYER_STANCES, isAlive, stanceLabel, strengthOf, type BattleState, type Stance, type Unit } from '@warsim/sim';
+import { PLAYER_STANCES, isAlive, isReplay, stanceLabel, strengthOf, type BattleState, type Stance, type Unit } from '@warsim/sim';
 import type { Game, Phase } from './game';
 
 const TYPE_LABEL = { infantry: '선보병', cavalry: '기병', artillery: '포병' } as const;
@@ -189,6 +189,20 @@ export class UI {
       this.game.allowOrdersWhilePaused = (e.target as HTMLInputElement).checked;
     });
     $('btn-start').addEventListener('click', () => this.game.startBattle());
+    ($('replay-file') as HTMLInputElement).addEventListener('change', async (e) => {
+      const f = (e.target as HTMLInputElement).files?.[0];
+      if (!f) return;
+      try {
+        const data: unknown = JSON.parse(await f.text());
+        if (!isReplay(data)) throw new Error('not a replay');
+        if (data.scenarioName !== this.game.scenario.name) throw new Error(`다른 시나리오의 리플레이입니다 (${data.scenarioName})`);
+        this.game.loadReplay(data);
+        seed.value = String(this.game.seed);
+        ($('enemy-profile') as HTMLSelectElement).value = this.game.enemyProfile;
+      } catch (err) {
+        alert(`리플레이를 읽을 수 없습니다: ${err instanceof Error ? err.message : String(err)}`);
+      }
+    });
   }
 
   private bindKeys(): void {
@@ -240,6 +254,7 @@ export class UI {
   setPhase(p: Phase): void {
     $('phase-label').textContent = p === 'deploy' ? '배치' : p === 'battle' ? '전투' : '결과';
     $('deploy-panel').classList.toggle('hidden', p !== 'deploy');
+    $('replay-badge').classList.toggle('hidden', !this.game.replayLoaded);
     $('deploy-hint').classList.toggle('hidden', p !== 'deploy');
     $('result').classList.toggle('hidden', p !== 'result');
     if (p === 'deploy') {
@@ -254,6 +269,15 @@ export class UI {
   // ---- result -----------------------------------------------------------
 
   private bindResult(): void {
+    $('btn-save-replay').addEventListener('click', () => {
+      const r = this.game.getReplay();
+      const blob = new Blob([JSON.stringify(r, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `warsim-replay-seed${r.seed}-${r.endTick ?? 0}.json`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    });
     $('btn-replay-same').addEventListener('click', () => this.game.restart());
     $('btn-replay-next').addEventListener('click', () => {
       this.game.setSeed(this.game.seed + 1);

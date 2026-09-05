@@ -5,9 +5,11 @@
  */
 import {
   createBattle,
+  hashState,
   mergeParams,
   assertParams,
   step,
+  type Replay,
   type BattleState,
   type Params,
   type Scenario,
@@ -51,6 +53,11 @@ export class Game {
   /** Visible auto-transition marks for the UI (unitId → tick). */
   autoMarks = new Map<number, number>();
   private lastEventIdx = 0;
+  /** Every player input applied this battle, in tick order (the replay). */
+  inputLog: StanceInput[] = [];
+  /** Inputs loaded from a replay file, fed at their recorded ticks. */
+  scripted: StanceInput[] = [];
+  replayLoaded = false;
 
   constructor(scenario: Scenario, baseParams: unknown, private events: GameEvents) {
     const p = mergeParams(baseParams, scenario.paramOverrides ?? {}) as Params;
@@ -71,7 +78,7 @@ export class Game {
     return createBattle(this.buildScenario(), this.params, this.seed, { altDeployment: [null, this.altIndex()] });
   }
 
-  private altIndex(): number | null {
+  altIndex(): number | null {
     const alts = this.scenario.sides[1].altDeployments;
     return alts && alts.length > 0 ? this.seed % alts.length : null;
   }
@@ -127,6 +134,7 @@ export class Game {
     this.state = this.previewState();
     this.enemyMem = createStrategyMemory();
     this.queued = [];
+    this.inputLog = [];
     this.autoMarks.clear();
     this.lastEventIdx = 0;
     this.acc = 0;
@@ -139,6 +147,40 @@ export class Game {
 
   restart(): void {
     cancelAnimationFrame(this.raf);
+    this.scripted = [];
+    this.replayLoaded = false;
+    this.setPhase('deploy');
+    this.refreshPreview();
+  }
+
+  // ---- replay -----------------------------------------------------------
+
+  /** Snapshot of the current (or finished) battle as a replay file. */
+  getReplay(): Replay {
+    return {
+      version: 1,
+      scenarioName: this.scenario.name,
+      seed: this.seed,
+      altDeployment: this.altIndex(),
+      deployment: this.deploy.map((d) => ({ ...d })),
+      enemyProfile: this.enemyProfile,
+      inputs: this.inputLog.map((i) => ({ ...i })),
+      soldiers: true,
+      finalHash: hashState(this.state),
+      endTick: this.state.tick,
+    };
+  }
+
+  /** Load a replay: restores seed, deployment and profile; inputs play back on start. */
+  loadReplay(r: Replay): void {
+    cancelAnimationFrame(this.raf);
+    this.seed = r.seed;
+    this.enemyProfile = r.enemyProfile as StrategyProfile;
+    r.deployment.forEach((d, i) => {
+      if (this.deploy[i]) this.deploy[i] = { ...d };
+    });
+    this.scripted = r.inputs.map((i) => ({ ...i }));
+    this.replayLoaded = true;
     this.setPhase('deploy');
     this.refreshPreview();
   }
@@ -200,6 +242,8 @@ export class Game {
     const enemyInputs = strategyDecide(s, 1, this.params, this.enemyMem, this.enemyProfile);
     const playerInputs = this.queued.map((q) => ({ ...q, tick: s.tick }));
     this.queued = [];
+    for (const i of this.scripted) if (i.tick === s.tick) playerInputs.push(i);
+    this.inputLog.push(...playerInputs);
     step(s, this.params, [...playerInputs, ...enemyInputs], { brain: unitBrain });
     // Track automatic transitions for card flashes.
     for (; this.lastEventIdx < s.events.length; this.lastEventIdx++) {

@@ -10,3 +10,4 @@ export * from './battle';
 export * from './brain';
 export * from './step';
 export * from './hash';
+export * from './replay';

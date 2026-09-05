@@ -247,6 +247,10 @@ function decideWithdraw(state: BattleState, u: Unit, params: Params): UnitDecisi
     return { action: { kind: 'charge', targetId: pursuer.id } };
   }
   const rp = rearPoint(state, params, u);
+  if (Math.abs(rp.x - u.formation.x) <= 4) {
+    // At the rally line: stand and face the enemy (delaying fire still applies).
+    return { action: pursuer ? { kind: 'volley', targetId: pursuer.id } : { kind: 'idle' } };
+  }
   return { action: { kind: 'move', x: rp.x, y: rp.y, charge: false } };
 }
 

@@ -110,6 +110,8 @@ export interface Unit {
   sawEnemyRoutTick: number;
   /** Target id of the charge currently announced (avoid duplicate events). */
   chargeAnnouncedTarget: number | null;
+  /** Last tick this unit cut down fleeing men while pursuing a routing unit. */
+  lastRideDownTick: number;
 
   /** Casualties suffered in the recent window (decays). */
   recentLosses: number;

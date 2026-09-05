@@ -53,6 +53,7 @@ function makeUnit(params: Params, id: number, side: 0 | 1, index: number, su: Sc
     underFireTick: -100000,
     sawEnemyRoutTick: -100000,
     chargeAnnouncedTarget: null,
+    lastRideDownTick: -100000,
     recentLosses: 0,
     initialStrength: n,
     casualties: 0,

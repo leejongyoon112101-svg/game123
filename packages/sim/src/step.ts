@@ -193,8 +193,8 @@ function faceToward(params: Params, u: Unit, tx: number, ty: number): void {
 }
 
 function clampToMap(params: Params, u: Unit): void {
-  // Withdrawing/routing units may leave through their own rear edge.
-  const dir = u.stance === 'rout' || u.stance === 'withdraw' ? (u.side === 0 ? -1 : 1) : 0;
+  // Only routing units may leave through their own rear edge.
+  const dir = u.stance === 'rout' ? (u.side === 0 ? -1 : 1) : 0;
   const minX = dir < 0 ? -60 : 5;
   const maxX = dir > 0 ? params.map.width + 60 : params.map.width - 5;
   u.formation.x = clamp(u.formation.x, minX, maxX);
@@ -473,11 +473,13 @@ function resolveCharges(state: BattleState, params: Params, rng: Rng): void {
     // --- Contact ---
     u.targetId = t.id;
     if (t.stance === 'rout') {
-      // Riding down a routing unit: free casualties, no melee.
-      const kills = applyCasualties(state, params, t, rng.roundStochastic(n * 0.06), u.formation.x, u.formation.y, 'melee');
-      u.action = { kind: 'idle' };
-      u.chargeAnnouncedTarget = null;
-      void kills;
+      // Pursuit: stay on the fleeing unit and cut men down every couple of
+      // seconds. No melee, no repeated charge events; the brain decides when
+      // to break off (a routing unit is a low-value target).
+      if (state.tick - u.lastRideDownTick >= params.melee.rideDownIntervalSec * params.ticksPerSecond) {
+        u.lastRideDownTick = state.tick;
+        applyCasualties(state, params, t, rng.roundStochastic(n * params.melee.rideDownFraction), u.formation.x, u.formation.y, 'melee');
+      }
       continue;
     }
 
@@ -714,7 +716,7 @@ function checkDestroyedExited(state: BattleState, params: Params): void {
     const x = u.formation.x;
     const outLeft = u.side === 0 && x <= -30;
     const outRight = u.side === 1 && x >= params.map.width + 30;
-    if ((u.stance === 'rout' || u.stance === 'withdraw') && (outLeft || outRight)) {
+    if (u.stance === 'rout' && (outLeft || outRight)) {
       u.exited = true;
       u.meleeWith = null;
       pushEvent(state, { kind: 'unit_exited', side: u.side, unitId: u.id, text: `${u.name} 전장 이탈 (${STANCE_LABEL[u.stance]})` });

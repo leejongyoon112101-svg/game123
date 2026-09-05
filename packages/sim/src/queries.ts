@@ -93,10 +93,14 @@ export function livingFriends(state: BattleState, u: Unit): Unit[] {
   return state.units.filter((f) => f.side === u.side && f.id !== u.id && isAlive(f));
 }
 
-/** Rear-most safe x for a side (used for withdraw/rout destinations). */
+/**
+ * Rally line for a withdrawing unit: just inside its own rear edge. Withdrawing
+ * units stop here and wait to be rallied; only routing units leave the map.
+ */
 export function rearPoint(state: BattleState, params: Params, u: Unit): { x: number; y: number } {
   const dir = state.sideRearDir[u.side];
-  const x = dir < 0 ? -40 : params.map.width + 40;
+  const margin = params.stance.withdrawRearMargin;
+  const x = dir < 0 ? margin : params.map.width - margin;
   return { x, y: u.formation.y };
 }
 

@@ -53,7 +53,9 @@
     "cavalryChargeVsSteadyInfantryFailChance": 0.6,
     "chargeFailMoraleLoss": 15,
     "chargeFailPushbackM": 35,
-    "disengageDistance": 25
+    "disengageDistance": 25,
+    "rideDownIntervalSec": 2,
+    "rideDownFraction": 0.05
   },
 
   "morale": {
@@ -117,6 +119,7 @@
     "assaultRangeHoldFrac": 0.4,
     "stagingDistance": 130,
     "cavalryChargeDistance": 200,
+    "withdrawRearMargin": 60,
     "reactionIntervalSec": 1
   },
 

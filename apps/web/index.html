@@ -51,6 +51,8 @@
             </label>
             <label><input id="pause-orders" type="checkbox" checked /> 일시정지 중 명령 허용</label>
             <button id="btn-start" class="primary">전투 시작</button>
+            <label class="muted small">리플레이 불러오기 <input id="replay-file" type="file" accept="application/json" /></label>
+            <p id="replay-badge" class="muted small hidden">리플레이 로드됨 — 기록된 명령이 재생됩니다. 추가 명령도 가능.</p>
           </div>
           <div id="feed-panel" class="panel">
             <h3>이벤트</h3>
@@ -80,6 +82,7 @@
             <ul id="result-log"></ul>
           </section>
           <div class="modal-actions">
+            <button id="btn-save-replay">리플레이 저장 (JSON)</button>
             <button id="btn-replay-same" class="primary">같은 시드로 다시</button>
             <button id="btn-replay-next">다음 시드로 다시</button>
           </div>

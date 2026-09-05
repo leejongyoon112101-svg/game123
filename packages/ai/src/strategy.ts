@@ -142,10 +142,12 @@ export function strategyDecide(
     // 5. Press the advantage when the enemy is collapsing, or when the line has
     //    held long enough and we are not the weaker side.
     const late = state.tick >= params.ai.pressAdvantageAfterSec * params.ticksPerSecond;
+    const fresh = strength >= 30 && state.tick - u.stanceSinceTick >= 10 * params.ticksPerSecond;
     if (
       u.type === 'infantry' &&
       u.stance === 'hold' &&
       u.morale >= 65 &&
+      fresh &&
       ((foeAvail <= 4 && myAvail >= 6) || (late && myAvail >= foeAvail && profile !== 'defensive') || (profile === 'aggressive' && dNear < 250))
     ) {
       order(out, state, u, 'assault');

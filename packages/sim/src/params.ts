@@ -58,6 +58,8 @@ export interface Params {
     chargeFailMoraleLoss: number;
     chargeFailPushbackM: number;
     disengageDistance: number;
+    rideDownIntervalSec: number;
+    rideDownFraction: number;
   };
   morale: {
     start: number;
@@ -116,6 +118,7 @@ export interface Params {
     assaultRangeHoldFrac: number;
     stagingDistance: number;
     cavalryChargeDistance: number;
+    withdrawRearMargin: number;
     reactionIntervalSec: number;
   };
   victory: {

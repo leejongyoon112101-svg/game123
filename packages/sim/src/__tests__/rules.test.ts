@@ -82,3 +82,51 @@ describe('sim rules', () => {
     expect(s.result?.reason).toBe('available');
   });
 });
+
+describe('sim rules: withdraw and pursuit', () => {
+  const params = loadDefaultParams();
+
+  it('a withdrawing unit stops at its rally line instead of leaving the map', () => {
+    const sc = duel(
+      [
+        { type: 'infantry', commander: calm, x: 300, y: 500, stance: 'withdraw' },
+        { type: 'infantry', commander: calm, x: 300, y: 300, stance: 'hold' },
+        { type: 'infantry', commander: calm, x: 300, y: 700, stance: 'hold' },
+      ],
+      [{ type: 'infantry', commander: calm, x: 1200, y: 500, stance: 'hold' }],
+    );
+    const s = createBattle(sc, params, 1);
+    // Drive the withdraw with a minimal brain: move to the rear point.
+    const brain = (state: typeof s, u: (typeof s.units)[number]) => {
+      if (u.stance !== 'withdraw') return { action: { kind: 'idle' as const } };
+      const dir = state.sideRearDir[u.side];
+      const x = dir < 0 ? params.stance.withdrawRearMargin : params.map.width - params.stance.withdrawRearMargin;
+      return { action: { kind: 'move' as const, x, y: u.formation.y, charge: false } };
+    };
+    for (let i = 0; i < 3000; i++) step(s, params, [], { brain, skipSoldiers: true });
+    const u = s.units[0]!;
+    expect(u.exited).toBe(false);
+    expect(u.formation.x).toBeGreaterThanOrEqual(params.stance.withdrawRearMargin - 5);
+    expect(u.formation.x).toBeLessThanOrEqual(params.stance.withdrawRearMargin + 5);
+  });
+
+  it('pursuing a routing unit announces the charge once and cuts men down over time', () => {
+    const sc = duel(
+      [{ type: 'cavalry', commander: calm, x: 700, y: 500, stance: 'assault' }],
+      [
+        { type: 'infantry', commander: calm, x: 760, y: 500, stance: 'hold', facingDeg: 180 },
+        { type: 'infantry', commander: calm, x: 1300, y: 300, stance: 'hold', facingDeg: 180 },
+        { type: 'infantry', commander: calm, x: 1300, y: 700, stance: 'hold', facingDeg: 180 },
+      ],
+    );
+    const s = createBattle(sc, params, 1);
+    s.units[1]!.morale = 0; // routs on the first tick
+    const brain = (_state: typeof s, u: (typeof s.units)[number]) =>
+      u.type === 'cavalry' ? { action: { kind: 'charge' as const, targetId: 1 } } : { action: { kind: 'idle' as const } };
+    for (let i = 0; i < 300; i++) step(s, params, [], { brain, skipSoldiers: true });
+    const charges = s.events.filter((e) => e.kind === 'charge_start' && e.unitId === 0).length;
+    expect(charges).toBe(1);
+    expect(s.units[1]!.casualties).toBeGreaterThan(3);
+    expect(s.events.filter((e) => e.kind === 'melee_start').length).toBe(0);
+  });
+});

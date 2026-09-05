@@ -520,7 +520,7 @@
               "aggression": 0.4,
               "composure": 0.6
             },
-            "x": 1000,
+            "x": 1080,
             "y": 200,
             "stance": "hold"
           },
@@ -531,7 +531,7 @@
               "aggression": 0.8,
               "composure": 0.5
             },
-            "x": 980,
+            "x": 1060,
             "y": 300,
             "stance": "assault"
           },
@@ -564,7 +564,7 @@
               "aggression": 0.9,
               "composure": 0.4
             },
-            "x": 980,
+            "x": 1060,
             "y": 400,
             "stance": "assault"
           },
@@ -608,7 +608,7 @@
               "aggression": 0.2,
               "composure": 0.7
             },
-            "x": 1040,
+            "x": 1130,
             "y": 500,
             "stance": "hold"
           },
