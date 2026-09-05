@@ -1,0 +1,135 @@
+{
+  "$comment": "warsim balance parameters. All units: meters, seconds, ticks (10 ticks/sec) as named. Edit without touching code.",
+  "ticksPerSecond": 10,
+  "battleTimeLimitSec": 1200,
+  "map": { "width": 1500, "height": 1000, "cellSize": 10 },
+
+  "unit": {
+    "soldiersPerUnit": 50,
+    "destroyedBelowStrength": 5,
+    "baseSpeedMps": 1.8,
+    "soldierCatchUpMult": 1.35,
+    "chargeSpeedMult": 1.6,
+    "routSpeedMult": 1.5,
+    "fatigueSpeedPenalty": 0.35,
+    "formationChangeSec": 20,
+    "formationChangingFireMult": 0.4,
+    "formationChangingMeleeMult": 0.6,
+    "contactDistance": 12,
+    "turnRateRadPerSec": 0.6
+  },
+
+  "types": {
+    "infantry":  { "speed": 1.0, "fire": 1.0, "melee": 1.0, "meleeCharge": 1.3, "range": 100, "volleyIntervalSec": 20, "ammo": 30, "fatigueMult": 1.0 },
+    "cavalry":   { "speed": 2.5, "fire": 0.0, "melee": 0.8, "meleeCharge": 2.5, "range": 0,   "volleyIntervalSec": 0,  "ammo": 0,  "fatigueMult": 1.4 },
+    "artillery": { "speed": 0.5, "fire": 3.0, "melee": 0.2, "meleeCharge": 0.2, "range": 600, "volleyIntervalSec": 40, "ammo": 20, "fatigueMult": 1.0 }
+  },
+
+  "fire": {
+    "baseHitPerSoldier": 0.11,
+    "falloffStartFrac": 0.3,
+    "falloffEndMult": 0.3,
+    "artilleryMinRange": 60,
+    "artilleryHitPerSoldier": 0.022,
+    "coverForest": 0.5,
+    "coverHillHold": 0.7,
+    "coverPlain": 1.0,
+    "fatiguePenalty": 0.5,
+    "firingArcRad": 1.2,
+    "withdrawDelayFireMult": 0.6
+  },
+
+  "melee": {
+    "casualtiesPerPowerPerSec": 0.015,
+    "chargeWindowSec": 8,
+    "flankBonus": 1.5,
+    "rearBonus": 2.0,
+    "hillDefenderBonus": 1.25,
+    "forestCavalryPenalty": 0.5,
+    "chargeShockBase": 12,
+    "chargeElan": 6,
+    "fatigueMeleePenalty": 0.2,
+    "cavalryChargeShockVsMoving": 25,
+    "cavalryChargeVsSteadyInfantryFailChance": 0.6,
+    "chargeFailMoraleLoss": 15,
+    "chargeFailPushbackM": 35,
+    "disengageDistance": 25
+  },
+
+  "morale": {
+    "start": 80,
+    "collapseThreshold": 25,
+    "recoverThreshold": 40,
+    "composureThresholdShift": 10,
+    "lossFactor": 1.3,
+    "flankHitMult": 1.6,
+    "rearHitMult": 2.0,
+    "artilleryHitFlat": 3,
+    "cavalryChargeReceived": 15,
+    "friendlyRoutWitnessed": 10,
+    "friendlyRoutWitnessRadius": 180,
+    "enemyRoutWitnessed": 8,
+    "enemyRoutWitnessRadius": 250,
+    "adjacentFriendlyRadius": 120,
+    "adjacentFriendlyPerSec": 0.15,
+    "passiveCap": 90,
+    "strengthCapFloor": 0.4,
+    "isolationPerSec": 0.03,
+    "recoveryPerSec": { "assault": 0.1, "hold": 0.3, "screen": 0.6, "withdraw": 0, "rally": 2.5, "rout": 0.8 },
+    "routRecoveryEnemyRadius": 200,
+    "composureLossMitigation": 0.4,
+    "meleeLossMult": 2.0,
+    "routDeserterFraction": 0.15,
+    "recentWindowSec": 30
+  },
+
+  "cohesion": {
+    "start": 1.0,
+    "movePerSec": -0.012,
+    "moveFloor": 0.7,
+    "chargePerSec": -0.01,
+    "chargeFloor": 0.5,
+    "formationChangePerSec": -0.03,
+    "stillPerSec": 0.04,
+    "rallyPerSec": 0.08,
+    "perLossFrac": 0.6,
+    "min": 0.2
+  },
+
+  "fatigue": {
+    "movePerSec": 0.003,
+    "chargePerSec": 0.008,
+    "meleePerSec": 0.01,
+    "restPerSec": 0.006
+  },
+
+  "vision": {
+    "baseRange": 450,
+    "forestTargetRange": 130,
+    "screenDetectMult": 0.6
+  },
+
+  "stance": {
+    "holdRepositionRadius": 60,
+    "screenKeepDistance": 180,
+    "screenFallbackDistance": 120,
+    "withdrawPursuitDistance": 90,
+    "assaultRangeHoldFrac": 0.4,
+    "stagingDistance": 130,
+    "cavalryChargeDistance": 200,
+    "reactionIntervalSec": 1
+  },
+
+  "victory": {
+    "availableFractionToLose": 0.3
+  },
+
+  "ai": {
+    "heavyLossWindowFrac": 0.2,
+    "chargeMoraleAdvantage": 30,
+    "aggressionAutoAssaultThreshold": 0.6,
+    "composureWithdrawThreshold": 0.4,
+    "strategyIntervalSec": 3,
+    "pressAdvantageAfterSec": 420
+  }
+}

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>warsim — 태세 전투 프로토타입</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header id="topbar">
+        <div class="left">
+          <span class="brand">warsim</span>
+          <span id="phase-label" class="phase">배치</span>
+          <span id="clock" class="clock">00:00</span>
+        </div>
+        <div class="center" id="speed-controls">
+          <button data-speed="0" title="일시정지 (Space)">‖</button>
+          <button data-speed="1" class="active" title="1배속">1×</button>
+          <button data-speed="2" title="2배속">2×</button>
+          <button data-speed="4" title="4배속 (디버그)">4×</button>
+        </div>
+        <div class="right">
+          <span id="avail-a" class="avail a">아군 10</span>
+          <span class="vs">vs</span>
+          <span id="avail-b" class="avail b">적군 10</span>
+          <button id="btn-restart" class="ghost" title="배치부터 다시">↺</button>
+        </div>
+      </header>
+
+      <main id="main">
+        <div id="canvas-wrap">
+          <div id="deploy-hint" class="overlay-hint">
+            <strong>배치 단계</strong> — 부대를 드래그해 배치하고, 카드에서 초기 태세를 정하세요.
+            <span class="kbd">Q</span>/<span class="kbd">E</span> 선택 부대 회전 · 마우스 휠 줌 · 우클릭 드래그 팬
+          </div>
+        </div>
+        <aside id="sidebar">
+          <div id="deploy-panel" class="panel">
+            <h3>배치</h3>
+            <p class="muted">좌측 1/3이 아군 배치 구역입니다. 적은 3종 배치 중 하나를 시드에 따라 고릅니다.</p>
+            <label>시드 <input id="seed-input" type="number" value="1" min="0" /></label>
+            <label>적 전략
+              <select id="enemy-profile">
+                <option value="balanced">균형 (기본 스크립트)</option>
+                <option value="aggressive">공격적</option>
+                <option value="defensive">방어적</option>
+                <option value="passive">수동 (반응 없음)</option>
+              </select>
+            </label>
+            <label><input id="pause-orders" type="checkbox" checked /> 일시정지 중 명령 허용</label>
+            <button id="btn-start" class="primary">전투 시작</button>
+          </div>
+          <div id="feed-panel" class="panel">
+            <h3>이벤트</h3>
+            <ul id="feed"></ul>
+          </div>
+        </aside>
+      </main>
+
+      <footer id="cards"></footer>
+
+      <div id="result" class="modal hidden">
+        <div class="modal-body">
+          <h2 id="result-title">전투 종료</h2>
+          <p id="result-sub" class="muted"></p>
+          <div class="result-grid">
+            <section>
+              <h4>부대별 결과</h4>
+              <table id="result-table"></table>
+            </section>
+            <section>
+              <h4>사기 곡선 <label class="muted small"><input id="chart-enemy" type="checkbox" /> 적군 표시</label></h4>
+              <canvas id="morale-chart" width="640" height="260"></canvas>
+            </section>
+          </div>
+          <section>
+            <h4>태세 변경 로그 (명령 + 자동)</h4>
+            <ul id="result-log"></ul>
+          </section>
+          <div class="modal-actions">
+            <button id="btn-replay-same" class="primary">같은 시드로 다시</button>
+            <button id="btn-replay-next">다음 시드로 다시</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

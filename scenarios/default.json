@@ -1,0 +1,630 @@
+{
+  "name": "Ridge and Wood",
+  "description": "1.5km x 1.0km. A central hill to the south, a wood to the north. Each side: 6 line infantry, 2 cavalry, 2 artillery.",
+  "deployZoneFrac": 0.3333,
+  "terrain": [
+    {
+      "kind": "forest",
+      "x": 560,
+      "y": 80,
+      "w": 300,
+      "h": 260
+    },
+    {
+      "kind": "forest",
+      "x": 120,
+      "y": 760,
+      "w": 180,
+      "h": 160
+    },
+    {
+      "kind": "forest",
+      "x": 1180,
+      "y": 60,
+      "w": 200,
+      "h": 150
+    },
+    {
+      "kind": "hill",
+      "x": 620,
+      "y": 560,
+      "w": 260,
+      "h": 220,
+      "height": 1
+    },
+    {
+      "kind": "hill",
+      "x": 680,
+      "y": 610,
+      "w": 140,
+      "h": 120,
+      "height": 2
+    },
+    {
+      "kind": "hill",
+      "x": 340,
+      "y": 380,
+      "w": 120,
+      "h": 120,
+      "height": 1
+    },
+    {
+      "kind": "hill",
+      "x": 1080,
+      "y": 420,
+      "w": 120,
+      "h": 140,
+      "height": 1
+    }
+  ],
+  "sides": [
+    {
+      "name": "아군",
+      "units": [
+        {
+          "type": "infantry",
+          "name": "1중대",
+          "commander": {
+            "aggression": 0.3,
+            "composure": 0.7
+          },
+          "x": 440,
+          "y": 250,
+          "stance": "hold"
+        },
+        {
+          "type": "infantry",
+          "name": "2중대",
+          "commander": {
+            "aggression": 0.8,
+            "composure": 0.5
+          },
+          "x": 440,
+          "y": 340,
+          "stance": "hold"
+        },
+        {
+          "type": "infantry",
+          "name": "3중대",
+          "commander": {
+            "aggression": 0.9,
+            "composure": 0.4
+          },
+          "x": 440,
+          "y": 430,
+          "stance": "hold"
+        },
+        {
+          "type": "infantry",
+          "name": "4중대",
+          "commander": {
+            "aggression": 0.5,
+            "composure": 0.8
+          },
+          "x": 440,
+          "y": 520,
+          "stance": "hold"
+        },
+        {
+          "type": "infantry",
+          "name": "5중대",
+          "commander": {
+            "aggression": 0.4,
+            "composure": 0.5
+          },
+          "x": 440,
+          "y": 610,
+          "stance": "hold"
+        },
+        {
+          "type": "infantry",
+          "name": "6중대",
+          "commander": {
+            "aggression": 0.6,
+            "composure": 0.6
+          },
+          "x": 440,
+          "y": 700,
+          "stance": "hold"
+        },
+        {
+          "type": "cavalry",
+          "name": "1기병",
+          "commander": {
+            "aggression": 0.7,
+            "composure": 0.5
+          },
+          "x": 340,
+          "y": 150,
+          "stance": "screen"
+        },
+        {
+          "type": "cavalry",
+          "name": "2기병",
+          "commander": {
+            "aggression": 0.5,
+            "composure": 0.7
+          },
+          "x": 340,
+          "y": 830,
+          "stance": "screen"
+        },
+        {
+          "type": "artillery",
+          "name": "1포대",
+          "commander": {
+            "aggression": 0.2,
+            "composure": 0.8
+          },
+          "x": 360,
+          "y": 380,
+          "stance": "hold"
+        },
+        {
+          "type": "artillery",
+          "name": "2포대",
+          "commander": {
+            "aggression": 0.3,
+            "composure": 0.6
+          },
+          "x": 360,
+          "y": 580,
+          "stance": "hold"
+        }
+      ]
+    },
+    {
+      "name": "적군",
+      "units": [
+        {
+          "type": "infantry",
+          "name": "적1중대",
+          "commander": {
+            "aggression": 0.4,
+            "composure": 0.6
+          },
+          "x": 1060,
+          "y": 250,
+          "stance": "hold"
+        },
+        {
+          "type": "infantry",
+          "name": "적2중대",
+          "commander": {
+            "aggression": 0.8,
+            "composure": 0.5
+          },
+          "x": 1060,
+          "y": 340,
+          "stance": "assault"
+        },
+        {
+          "type": "infantry",
+          "name": "적3중대",
+          "commander": {
+            "aggression": 0.5,
+            "composure": 0.7
+          },
+          "x": 1060,
+          "y": 430,
+          "stance": "hold"
+        },
+        {
+          "type": "infantry",
+          "name": "적4중대",
+          "commander": {
+            "aggression": 0.6,
+            "composure": 0.4
+          },
+          "x": 1060,
+          "y": 520,
+          "stance": "hold"
+        },
+        {
+          "type": "infantry",
+          "name": "적5중대",
+          "commander": {
+            "aggression": 0.9,
+            "composure": 0.4
+          },
+          "x": 1060,
+          "y": 610,
+          "stance": "assault"
+        },
+        {
+          "type": "infantry",
+          "name": "적6중대",
+          "commander": {
+            "aggression": 0.3,
+            "composure": 0.8
+          },
+          "x": 1060,
+          "y": 700,
+          "stance": "hold"
+        },
+        {
+          "type": "cavalry",
+          "name": "적1기병",
+          "commander": {
+            "aggression": 0.8,
+            "composure": 0.4
+          },
+          "x": 1160,
+          "y": 150,
+          "stance": "screen"
+        },
+        {
+          "type": "cavalry",
+          "name": "적2기병",
+          "commander": {
+            "aggression": 0.6,
+            "composure": 0.6
+          },
+          "x": 1160,
+          "y": 830,
+          "stance": "screen"
+        },
+        {
+          "type": "artillery",
+          "name": "적1포대",
+          "commander": {
+            "aggression": 0.2,
+            "composure": 0.7
+          },
+          "x": 1140,
+          "y": 400,
+          "stance": "hold"
+        },
+        {
+          "type": "artillery",
+          "name": "적2포대",
+          "commander": {
+            "aggression": 0.2,
+            "composure": 0.7
+          },
+          "x": 1140,
+          "y": 600,
+          "stance": "hold"
+        }
+      ],
+      "altDeployments": [
+        [
+          {
+            "type": "infantry",
+            "name": "적1중대",
+            "commander": {
+              "aggression": 0.4,
+              "composure": 0.6
+            },
+            "x": 1060,
+            "y": 250,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적2중대",
+            "commander": {
+              "aggression": 0.8,
+              "composure": 0.5
+            },
+            "x": 1060,
+            "y": 340,
+            "stance": "assault"
+          },
+          {
+            "type": "infantry",
+            "name": "적3중대",
+            "commander": {
+              "aggression": 0.5,
+              "composure": 0.7
+            },
+            "x": 1060,
+            "y": 430,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적4중대",
+            "commander": {
+              "aggression": 0.6,
+              "composure": 0.4
+            },
+            "x": 1060,
+            "y": 520,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적5중대",
+            "commander": {
+              "aggression": 0.9,
+              "composure": 0.4
+            },
+            "x": 1060,
+            "y": 610,
+            "stance": "assault"
+          },
+          {
+            "type": "infantry",
+            "name": "적6중대",
+            "commander": {
+              "aggression": 0.3,
+              "composure": 0.8
+            },
+            "x": 1060,
+            "y": 700,
+            "stance": "hold"
+          },
+          {
+            "type": "cavalry",
+            "name": "적1기병",
+            "commander": {
+              "aggression": 0.8,
+              "composure": 0.4
+            },
+            "x": 1160,
+            "y": 150,
+            "stance": "screen"
+          },
+          {
+            "type": "cavalry",
+            "name": "적2기병",
+            "commander": {
+              "aggression": 0.6,
+              "composure": 0.6
+            },
+            "x": 1160,
+            "y": 830,
+            "stance": "screen"
+          },
+          {
+            "type": "artillery",
+            "name": "적1포대",
+            "commander": {
+              "aggression": 0.2,
+              "composure": 0.7
+            },
+            "x": 1140,
+            "y": 400,
+            "stance": "hold"
+          },
+          {
+            "type": "artillery",
+            "name": "적2포대",
+            "commander": {
+              "aggression": 0.2,
+              "composure": 0.7
+            },
+            "x": 1140,
+            "y": 600,
+            "stance": "hold"
+          }
+        ],
+        [
+          {
+            "type": "infantry",
+            "name": "적1중대",
+            "commander": {
+              "aggression": 0.4,
+              "composure": 0.6
+            },
+            "x": 1020,
+            "y": 560,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적2중대",
+            "commander": {
+              "aggression": 0.8,
+              "composure": 0.5
+            },
+            "x": 1020,
+            "y": 640,
+            "stance": "assault"
+          },
+          {
+            "type": "infantry",
+            "name": "적3중대",
+            "commander": {
+              "aggression": 0.5,
+              "composure": 0.7
+            },
+            "x": 1020,
+            "y": 720,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적4중대",
+            "commander": {
+              "aggression": 0.6,
+              "composure": 0.4
+            },
+            "x": 1020,
+            "y": 800,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적5중대",
+            "commander": {
+              "aggression": 0.9,
+              "composure": 0.4
+            },
+            "x": 1100,
+            "y": 880,
+            "stance": "assault"
+          },
+          {
+            "type": "infantry",
+            "name": "적6중대",
+            "commander": {
+              "aggression": 0.3,
+              "composure": 0.8
+            },
+            "x": 1120,
+            "y": 300,
+            "stance": "hold"
+          },
+          {
+            "type": "cavalry",
+            "name": "적1기병",
+            "commander": {
+              "aggression": 0.8,
+              "composure": 0.4
+            },
+            "x": 1200,
+            "y": 150,
+            "stance": "screen"
+          },
+          {
+            "type": "cavalry",
+            "name": "적2기병",
+            "commander": {
+              "aggression": 0.6,
+              "composure": 0.6
+            },
+            "x": 1200,
+            "y": 920,
+            "stance": "screen"
+          },
+          {
+            "type": "artillery",
+            "name": "적1포대",
+            "commander": {
+              "aggression": 0.2,
+              "composure": 0.7
+            },
+            "x": 1110,
+            "y": 480,
+            "stance": "hold"
+          },
+          {
+            "type": "artillery",
+            "name": "적2포대",
+            "commander": {
+              "aggression": 0.2,
+              "composure": 0.7
+            },
+            "x": 1110,
+            "y": 680,
+            "stance": "hold"
+          }
+        ],
+        [
+          {
+            "type": "infantry",
+            "name": "적1중대",
+            "commander": {
+              "aggression": 0.4,
+              "composure": 0.6
+            },
+            "x": 1000,
+            "y": 200,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적2중대",
+            "commander": {
+              "aggression": 0.8,
+              "composure": 0.5
+            },
+            "x": 980,
+            "y": 300,
+            "stance": "assault"
+          },
+          {
+            "type": "infantry",
+            "name": "적3중대",
+            "commander": {
+              "aggression": 0.5,
+              "composure": 0.7
+            },
+            "x": 1090,
+            "y": 460,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적4중대",
+            "commander": {
+              "aggression": 0.6,
+              "composure": 0.4
+            },
+            "x": 1090,
+            "y": 540,
+            "stance": "hold"
+          },
+          {
+            "type": "infantry",
+            "name": "적5중대",
+            "commander": {
+              "aggression": 0.9,
+              "composure": 0.4
+            },
+            "x": 980,
+            "y": 400,
+            "stance": "assault"
+          },
+          {
+            "type": "infantry",
+            "name": "적6중대",
+            "commander": {
+              "aggression": 0.3,
+              "composure": 0.8
+            },
+            "x": 1090,
+            "y": 760,
+            "stance": "hold"
+          },
+          {
+            "type": "cavalry",
+            "name": "적1기병",
+            "commander": {
+              "aggression": 0.8,
+              "composure": 0.4
+            },
+            "x": 1180,
+            "y": 120,
+            "stance": "screen"
+          },
+          {
+            "type": "cavalry",
+            "name": "적2기병",
+            "commander": {
+              "aggression": 0.6,
+              "composure": 0.6
+            },
+            "x": 1180,
+            "y": 660,
+            "stance": "screen"
+          },
+          {
+            "type": "artillery",
+            "name": "적1포대",
+            "commander": {
+              "aggression": 0.2,
+              "composure": 0.7
+            },
+            "x": 1040,
+            "y": 500,
+            "stance": "hold"
+          },
+          {
+            "type": "artillery",
+            "name": "적2포대",
+            "commander": {
+              "aggression": 0.2,
+              "composure": 0.7
+            },
+            "x": 1180,
+            "y": 400,
+            "stance": "hold"
+          }
+        ]
+      ]
+    }
+  ]
+}
