@@ -6,3 +6,4 @@ results/*.csv
 !results/.gitkeep
 .vite/
 results/*.json
+dist-artifact/

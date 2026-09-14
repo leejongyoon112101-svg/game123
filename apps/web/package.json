@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build:artifact": "vite build -c vite.artifact.config.ts && node scripts/single-file.mjs"
   },
   "dependencies": {
     "@warsim/ai": "workspace:*",

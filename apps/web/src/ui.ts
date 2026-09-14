@@ -269,15 +269,7 @@ export class UI {
   // ---- result -----------------------------------------------------------
 
   private bindResult(): void {
-    $('btn-save-replay').addEventListener('click', () => {
-      const r = this.game.getReplay();
-      const blob = new Blob([JSON.stringify(r, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `warsim-replay-seed${r.seed}-${r.endTick ?? 0}.json`;
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    });
+    $('btn-save-replay').addEventListener('click', () => void this.saveReplay());
     $('btn-replay-same').addEventListener('click', () => this.game.restart());
     $('btn-replay-next').addEventListener('click', () => {
       this.game.setSeed(this.game.seed + 1);
@@ -285,6 +277,44 @@ export class UI {
       this.game.restart();
     });
     ($('chart-enemy') as HTMLInputElement).addEventListener('change', () => this.drawChart(this.game.state));
+  }
+
+  /**
+   * Save the replay JSON. Inside the claude.ai artifact viewer the page must
+   * hand files over through the `downloads` capability; elsewhere a plain
+   * download link works.
+   */
+  private async saveReplay(): Promise<void> {
+    const r = this.game.getReplay();
+    const json = JSON.stringify(r, null, 2);
+    const filename = `warsim-replay-seed${r.seed}-${r.endTick ?? 0}.json`;
+    const btn = $('btn-save-replay') as HTMLButtonElement;
+    type Downloads = { save(req: { filename: string; data: string }): Promise<{ status: string }> };
+    type ClaudeHost = { use?(name: 'downloads'): Promise<Downloads | null> };
+    const host = (window as unknown as { claude?: ClaudeHost }).claude;
+    if (host?.use) {
+      btn.disabled = true;
+      try {
+        const downloads = await host.use('downloads');
+        if (downloads) {
+          await downloads.save({ filename, data: json });
+          btn.textContent = '리플레이 저장됨';
+          return;
+        }
+      } catch (err) {
+        const code = (err as { code?: string }).code ?? '';
+        if (code !== 'declined') btn.textContent = '저장 불가';
+        return;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+    const blob = new Blob([json], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
 
   private showResult(state: BattleState): void {

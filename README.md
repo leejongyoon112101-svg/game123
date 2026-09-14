@@ -11,6 +11,7 @@ pnpm test                      # 결정성 + 규칙 + 시나리오 밸런스 테
 pnpm headless --runs 100       # AI vs AI 100판, 승률/길이 분포 출력
 pnpm headless --runs 1 --seed 7 --verbose   # 1판의 이벤트 로그와 최종 부대 상태
 pnpm web                       # 브라우저 프로토타입 (Vite dev server)
+pnpm web:artifact              # 단일 HTML 파일 빌드 (apps/web/dist-artifact/warsim.html) — 서버 없이 열거나 Artifact로 게시
 ```
 
 헤드리스 옵션:

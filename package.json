@@ -2,7 +2,7 @@
   "name": "warsim",
   "private": true,
   "version": "0.1.0",
-  "description": "warsim — stance-based black-powder battle simulation prototype",
+  "description": "warsim \u2014 stance-based black-powder battle simulation prototype",
   "packageManager": "pnpm@10.33.0",
   "scripts": {
     "build": "pnpm -r --filter './packages/*' run build",
@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "headless": "pnpm --filter @warsim/headless run start --",
     "web": "pnpm --filter @warsim/web run dev",
-    "web:build": "pnpm --filter @warsim/web run build"
+    "web:build": "pnpm --filter @warsim/web run build",
+    "web:artifact": "pnpm --filter @warsim/web run build:artifact"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
